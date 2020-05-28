@@ -50,7 +50,7 @@ class ApiController extends BaseController
         //注册执行中间件
         $this->registerApiMiddleware($class);
         return $this->execApi($class,
-            is_callable($class, $restAction) ? $restAction : $action,
+            is_callable([$class, $restAction]) ? $restAction : $action,
             $params
         );
     }

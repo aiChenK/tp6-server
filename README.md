@@ -19,16 +19,21 @@
   /** api/v1/Test.php **/
   public function param($param1, $param2)
   {
-      return "param1: {$param1} <br /> param2: {$param2}";
+      return $this->json([
+          'param1' => $param1,
+          'param2' => $param2
+      ]);
   }
   
-  // 访问 http://xxx/api/v1/test/param/a1/b2
-  // 输出：
-  //      param1: 1
-  //      param2: 2
+  // 访问 http://xxx/api/v1/test/param/aaa/bbb
+  // 输出：{"param1":"aaa","param2":"bbb"}
   ```
 
 
 ## 验证
 - 执行：`curl http://xxxx/api/v1/test`
 - 执行：`curl -X POST http://xxxx/api/v1/test`
+
+## 更新
+2020-05-28 - v1.0.1
+- 修复Api路由，Post请求无法访问`indexPost`方法
