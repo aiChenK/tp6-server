@@ -3,7 +3,6 @@
 > - 通过Api控制器实现api模块路由
 > - api模块接口支持版本划分，支持restful
 > - 通过反射类实现api模块支持tp中间件，使用方式同controller
-> - 项目默认关闭路由功能
 
 ## 依赖
 - PHP 7.2+
@@ -35,5 +34,9 @@
 - 执行：`curl -X POST http://xxxx/api/v1/test`
 
 ## 更新
+2020-05-29 - v1.0.2
+- 开启路由功能
+- `BaseController`引入`TraitReturn`，统一返回结构
+
 2020-05-28 - v1.0.1
 - 修复Api路由，Post请求无法访问`indexPost`方法

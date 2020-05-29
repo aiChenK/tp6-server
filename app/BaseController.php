@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app;
 
+use app\helper\TraitReturn;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
@@ -12,6 +13,8 @@ use think\Validate;
  */
 abstract class BaseController
 {
+    use TraitReturn;
+
     /**
      * Request实例
      * @var \think\Request
@@ -55,6 +58,20 @@ abstract class BaseController
     {}
 
     /**
+     * 获取json请求体
+     *
+     * @return array|mixed|null
+     *
+     * @author aiChenK
+     * @since 1.0
+     * @version 1.0
+     */
+    public function getJson()
+    {
+        return $this->request->post();
+    }
+
+    /**
      * 验证数据
      * @access protected
      * @param  array        $data     数据
@@ -90,5 +107,4 @@ abstract class BaseController
 
         return $v->failException(true)->check($data);
     }
-
 }
