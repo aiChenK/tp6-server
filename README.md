@@ -34,6 +34,10 @@
 - 执行：`curl -X POST http://xxxx/api/v1/test`
 
 ## 更新
+2020-06-20 - v1.1.0
+- `config/app.php`中增加`api_exception_handle`配置，处理api模块异常
+- api模块异常默认返回json格式
+
 2020-05-29 - v1.0.2
 - 开启路由功能
 - `BaseController`引入`TraitReturn`，统一返回结构

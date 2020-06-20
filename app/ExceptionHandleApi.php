@@ -13,7 +13,7 @@ use Throwable;
 /**
  * 应用异常处理类
  */
-class ExceptionHandle extends Handle
+class ExceptionHandleApi extends Handle
 {
     /**
      * 不需要记录信息（日志）的异常类列表
@@ -50,9 +50,19 @@ class ExceptionHandle extends Handle
      */
     public function render($request, Throwable $e): Response
     {
-        // 添加自定义异常处理机制
+        $msg         = $this->getMessage($e);
+        $description = $e->getTraceAsString();
+        if ($e instanceof \ArgumentCountError) {
+            $msg         = '缺少必要参数';
+            $description = $this->getMessage($e);
+        }
 
-        // 其他错误交给系统处理
-        return parent::render($request, $e);
+        // 添加自定义异常处理机制
+        $data = [
+            'code'        => $e->getCode(),
+            'msg'         => $msg,
+            'description' => $description
+        ];
+        return json($data, 500);
     }
 }

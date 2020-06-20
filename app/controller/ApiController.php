@@ -116,18 +116,41 @@ class ApiController extends BaseController
         return $this->app->middleware->pipeline('api')
             ->send($this->request)
             ->then(function () use ($class, $action, $args) {
-                if (is_callable([$class, $action])) {
-                    try {
-                        $reflect = new \ReflectionMethod($class, $action);
-                    } catch (\ReflectionException $e) {
-                        $reflect = new \ReflectionMethod($class, '__call');
+                try {
+                    if (is_callable([$class, $action])) {
+                        try {
+                            $reflect = new \ReflectionMethod($class, $action);
+                        } catch (\ReflectionException $e) {
+                            $reflect = new \ReflectionMethod($class, '__call');
+                        }
+                    } else {
+                        // 操作不存在
+                        throw new HttpException(404, 'method not exists:' . get_class($class) . '->' . $action . '()');
                     }
-                } else {
-                    // 操作不存在
-                    throw new HttpException(404, 'method not exists:' . get_class($class) . '->' . $action . '()');
+                    return $reflect->invokeArgs($class, $args);
+                } catch (\Throwable $e) {
+                    return $this->apiExceptionHandle($e);
                 }
-
-                return $reflect->invokeArgs($class, $args);
             });
+    }
+
+    /**
+     * api异常处理，无定义则使用默认
+     *
+     * @param \Throwable $e
+     * @throws \Throwable
+     *
+     * @author aiChenK
+     * @version 1.0
+     */
+    private function apiExceptionHandle(\Throwable $e)
+    {
+        $handler = $this->app->config->get('app.api_exception_handle');
+        if (!class_exists($handler)) {
+            throw $e;
+        }
+        $handler = $this->app->make($handler);
+        $handler->report($e);
+        $handler->render($this->app->request, $e)->send();
     }
 }
