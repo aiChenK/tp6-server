@@ -34,6 +34,9 @@
 - 执行：`curl -X POST http://xxxx/api/v1/test`
 
 ## 更新
+2020-10-28 - v1.1.1
+- 使用`tp-session`替换中间件session实现
+
 2020-06-20 - v1.1.0
 - `config/app.php`中增加`api_exception_handle`配置，处理api模块异常
 - api模块异常默认返回json格式
