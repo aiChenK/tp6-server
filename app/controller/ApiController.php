@@ -138,6 +138,7 @@ class ApiController extends BaseController
      * api异常处理，无定义则使用默认
      *
      * @param \Throwable $e
+     * @return mixed
      * @throws \Throwable
      *
      * @author aiChenK
@@ -151,6 +152,6 @@ class ApiController extends BaseController
         }
         $handler = $this->app->make($handler);
         $handler->report($e);
-        $handler->render($this->app->request, $e)->send();
+        return $handler->render($this->app->request, $e);
     }
 }

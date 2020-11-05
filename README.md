@@ -34,6 +34,10 @@
 - 执行：`curl -X POST http://xxxx/api/v1/test`
 
 ## 更新
+2020-11-05 - v1.2.0
+- 去除`index.php`全局变量
+- 开启强制路由
+
 2020-10-28 - v1.1.1
 - 使用`tp-session`替换中间件session实现
 
