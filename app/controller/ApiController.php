@@ -30,10 +30,10 @@ class ApiController extends BaseController
         unset($params[0], $params[1], $params[2], $params[3]);
 
         //控制器层级处理
-        $realController = explode('.', $controller);
-        $className      = ucfirst(array_pop($realController));
-        array_push($realController, $className);
-        $realController = implode('\\', $realController);
+        $realController   = explode('.', $controller);
+        $className        = ucfirst(array_pop($realController));
+        $realController[] = $className;
+        $realController   = implode('\\', $realController);
 
         //初始化控制器类
         $classPath = "\\app\\api\\{$version}\\{$realController}";
